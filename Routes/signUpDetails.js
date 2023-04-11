@@ -4,8 +4,6 @@ const router = express.Router();
 const SignUP = require('../Models/signUpDetails');
 const cors = require('cors');
 router.use(cors());
-const jwt = require('jsonwebtoken');
-const CognitoExpress = require('cognito-express');
 
 router.post('', async (req, res) => {
 const signUpDetails = new SignUP({
@@ -22,7 +20,7 @@ try {
     let resObj = {
         status: true,
         message: 'Data saved successfully',
-        empList: signup
+        data: signup
     }
     res.json(resObj);
 } catch (error) {
@@ -31,7 +29,7 @@ try {
             let resObj = {
                 status: false,
                 message: 'Duplicate data found',
-                empList: []
+                data: []
             }
             res.json(resObj);
         }
@@ -40,20 +38,5 @@ try {
         }
 }
 });
-
-function authenticateToken(req, res, next) {
-    const cognitoExpress = new CognitoExpress({
-        region: 'ap-south-1',
-        cognitoUserPoolId: process.env.USER_POOL_ID,
-        tokenUse: 'access',
-        tokenExpiration: 3600000
-    });
-    let accessTokenFromClient = req.headers['auth'];
-    if (!accessTokenFromClient) return res.status(401).send('Access Token missing from header');
-    cognitoExpress.validate(accessTokenFromClient, function (err, response) {
-        if (err) return res.status(401).send('Invalid Token');
-        else next();
-    });
-}
 
 module.exports = router;

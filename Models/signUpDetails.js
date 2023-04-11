@@ -25,8 +25,7 @@ const signupSchema = new mongoose.Schema({
         unique: true
     },
     vehicleColor: {
-        type: String,
-        unique: true
+        type: String
     },
     carType: {
         type: String,

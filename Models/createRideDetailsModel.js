@@ -7,8 +7,7 @@ const createRideSchema = new mongoose.Schema({
     },
     vehiclenumber: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     vehiclecolor: {
         type: String,
@@ -35,7 +34,7 @@ const createRideSchema = new mongoose.Schema({
         required: true
     }
 
-    
+
 });
 
 module.exports = mongoose.model('CreateRideDetails', createRideSchema) //name SingUpDetails can be anything

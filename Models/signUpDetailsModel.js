@@ -17,8 +17,7 @@ const signupSchema = new mongoose.Schema({
         unique: true
     },
     rideType: {
-        type: String,
-        unique: true
+        type: String
     },
     vehicleNumber: {
         type: String,
@@ -28,11 +27,10 @@ const signupSchema = new mongoose.Schema({
         type: String
     },
     carType: {
-        type: String,
-        unique: true
+        type: String
     }
 
-    
+
 });
 
 module.exports = mongoose.model('SingUpDetails', signupSchema) //name SingUpDetails can be anything

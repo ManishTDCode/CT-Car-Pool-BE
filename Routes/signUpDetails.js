@@ -39,4 +39,18 @@ router.post('', async (req, res) => {
     }
 });
 
+router.get('/',  async (req, res) => {
+    try {
+        let userDetails = await SignUP.find();
+        let resObj = {
+            status: true,
+            message: 'Data fetched successfully',
+            data: userDetails
+        }
+        res.json(resObj);
+    } catch (error) {
+        res.send('Error occured' + ' ' + error);
+    }
+});
+
 module.exports = router;

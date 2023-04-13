@@ -1,6 +1,14 @@
 const mongoose = require('mongoose');
 
 const createRideSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    mobileNo: {
+        type: Number,
+        required: true
+    },
     ridetype: {
         type: String,
         required: true

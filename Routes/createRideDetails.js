@@ -35,8 +35,30 @@ router.get('/:id', authenticateToken, async (req, res) => {
     }
 });
 
+router.delete('/:id', authenticateToken, async (req, res) => {
+    try{
+        const ride = await CreateRide.findById(req.params.id);
+        const a = await ride.deleteOne()
+        const resObj = {
+            status:true,
+            messasge:"book deleted successfully",
+            book:ride
+        }
+        res.json(resObj);
+    }catch(err){
+        const resObj = {
+            status:false,
+            messasge:"Something went wrong",
+           
+        }
+        res.json(resObj);
+    }
+});
+
 router.post('', authenticateToken, async (req, res) => {
     const createRide = new CreateRide({
+        name:req.body.name,
+        mobileNo:req.body.mobileNo,
         ridetype: req.body.ridetype,
         vehiclenumber: req.body.vehiclenumber,
         vehiclecolor: req.body.vehiclecolor,

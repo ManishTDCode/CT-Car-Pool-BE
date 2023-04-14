@@ -36,20 +36,20 @@ router.get('/:id', authenticateToken, async (req, res) => {
 });
 
 router.delete('/:id', authenticateToken, async (req, res) => {
-    try{
+    try {
         const ride = await CreateRide.findById(req.params.id);
         const a = await ride.deleteOne()
         const resObj = {
-            status:true,
-            messasge:"book deleted successfully",
-            book:ride
+            status: true,
+            messasge: "book deleted successfully",
+            book: ride
         }
         res.json(resObj);
-    }catch(err){
+    } catch (err) {
         const resObj = {
-            status:false,
-            messasge:"Something went wrong",
-           
+            status: false,
+            messasge: "Something went wrong",
+
         }
         res.json(resObj);
     }
@@ -57,8 +57,9 @@ router.delete('/:id', authenticateToken, async (req, res) => {
 
 router.post('', authenticateToken, async (req, res) => {
     const createRide = new CreateRide({
-        name:req.body.name,
-        mobileNo:req.body.mobileNo,
+        name: req.body.name,
+        mobileNo: req.body.mobileNo,
+        emailId: req.body.emailId,
         ridetype: req.body.ridetype,
         vehiclenumber: req.body.vehiclenumber,
         vehiclecolor: req.body.vehiclecolor,
@@ -66,7 +67,9 @@ router.post('', authenticateToken, async (req, res) => {
         from: req.body.from,
         to: req.body.to,
         fare: req.body.fare,
-        seats: req.body.seats
+        seats: req.body.seats,
+        time: req.body.time,
+        date: req.body.date
     });
     try {
         const createride = await createRide.save();
@@ -77,21 +80,38 @@ router.post('', authenticateToken, async (req, res) => {
         }
         res.json(resObj);
     } catch (error) {
-        // let errorCode = error.code;
-        // if (errorCode == 11000) {
-        //     let resObj = {
-        //         status: false,
-        //         message: 'Duplicate data found',
-        //         data: []
-        //     }
-        //     res.json(resObj);
-        // }
-        // else {
-
-        // }
         res.json('Error occured' + ' ' + error);
     }
 });
+
+router.put('/:id', authenticateToken, async (req, res) => {
+    try {
+        const ride = await CreateRide.findById(req.params.id);
+        console.log(ride);
+        ride.name = req.body.name,
+            ride.mobileNo = req.body.mobileNo,
+            ride.emailId = req.body.emailId,
+            ride.ridetype = req.body.ridetype,
+            ride.vehiclenumber = req.body.vehiclenumber,
+            ride.vehiclecolor = req.body.vehiclecolor,
+            ride.vehicletype = req.body.vehicletype,
+            ride.from = req.body.from,
+            ride.to = req.body.to,
+            ride.fare = req.body.fare,
+            ride.seats = req.body.seats,
+            ride.time = req.body.time,
+            ride.date = req.body.date
+        const updatedRide = ride.save();
+        let resObj = {
+            status: true,
+            message: 'ride updated successfully',
+            empList: updatedRide
+        }
+        res.json(resObj);
+    } catch (error) {
+        res.json('error occured:' + error)
+    }
+})
 
 function authenticateToken(req, res, next) {
     const cognitoExpress = new CognitoExpress({

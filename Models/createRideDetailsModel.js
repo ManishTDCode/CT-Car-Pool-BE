@@ -9,6 +9,10 @@ const createRideSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    emailId: {
+        type: String,
+        required: true
+    },
     ridetype: {
         type: String,
         required: true
@@ -39,6 +43,14 @@ const createRideSchema = new mongoose.Schema({
     },
     seats: {
         type: Number,
+        required: true
+    },
+    time: {
+        type: String,
+        required: true
+    },
+    date: {
+        type: String,
         required: true
     }
 

@@ -84,23 +84,39 @@ router.post('', authenticateToken, async (req, res) => {
     }
 });
 
-router.put('/:id', authenticateToken, async (req, res) => {
+// router.put('/:id', authenticateToken, async (req, res) => {
+//     try {
+//         const ride = await CreateRide.findById(req.params.id);
+//         console.log(ride);
+//         ride.name = req.body.name,
+//             ride.mobileNo = req.body.mobileNo,
+//             ride.emailId = req.body.emailId,
+//             ride.ridetype = req.body.ridetype,
+//             ride.vehiclenumber = req.body.vehiclenumber,
+//             ride.vehiclecolor = req.body.vehiclecolor,
+//             ride.vehicletype = req.body.vehicletype,
+//             ride.from = req.body.from,
+//             ride.to = req.body.to,
+//             ride.fare = req.body.fare,
+//             ride.seats = req.body.seats,
+//             ride.time = req.body.time,
+//             ride.date = req.body.date
+//         const updatedRide = ride.save();
+//         let resObj = {
+//             status: true,
+//             message: 'ride updated successfully',
+//             empList: updatedRide
+//         }
+//         res.json(resObj);
+//     } catch (error) {
+//         res.json('error occured:' + error)
+//     }
+// })
+router.patch('/:id', authenticateToken, async (req, res) => {
     try {
         const ride = await CreateRide.findById(req.params.id);
-        console.log(ride);
-        ride.name = req.body.name,
-            ride.mobileNo = req.body.mobileNo,
-            ride.emailId = req.body.emailId,
-            ride.ridetype = req.body.ridetype,
-            ride.vehiclenumber = req.body.vehiclenumber,
-            ride.vehiclecolor = req.body.vehiclecolor,
-            ride.vehicletype = req.body.vehicletype,
-            ride.from = req.body.from,
-            ride.to = req.body.to,
-            ride.fare = req.body.fare,
-            ride.seats = req.body.seats,
-            ride.time = req.body.time,
-            ride.date = req.body.date
+        parameter = Object.keys(req.body)[0];
+        ride[parameter] = req.body[parameter];
         const updatedRide = ride.save();
         let resObj = {
             status: true,

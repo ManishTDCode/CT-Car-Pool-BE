@@ -3,10 +3,11 @@ const router = express.Router();
 const cors = require('cors');
 router.use(cors());
 const nodemailer = require('nodemailer');
+const CognitoExpress = require('cognito-express');
 
 
 
-router.post('/', (req, res) => {
+router.post('/', authenticateToken, (req, res) => {
     try {
         const transporter = nodemailer.createTransport({
             host: 'smtp-mail.outlook.com',
@@ -87,5 +88,20 @@ router.post('/', (req, res) => {
         res.json('Error occured' + ' ' + error);
     }
 });
+
+function authenticateToken(req, res, next) {
+    const cognitoExpress = new CognitoExpress({
+        region: 'ap-south-1',
+        cognitoUserPoolId: process.env.USER_POOL_ID,
+        tokenUse: 'access',
+        tokenExpiration: 3600000
+    });
+    let accessTokenFromClient = req.headers['auth'];
+    if (!accessTokenFromClient) return res.status(401).send('Access Token missing from header');
+    cognitoExpress.validate(accessTokenFromClient, function (err, response) {
+        if (err) return res.status(401).send('Invalid Token');
+        else next();
+    });
+}
 
 module.exports = router;

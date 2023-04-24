@@ -49,7 +49,7 @@ router.delete('/:id', authenticateToken, async (req, res) => {
         const a = await ride.deleteOne()
         const resObj = {
             status: true,
-            messasge: "book deleted successfully",
+            messasge: "Ride deleted successfully",
             book: ride
         }
         res.json(resObj);

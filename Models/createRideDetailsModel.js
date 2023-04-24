@@ -52,6 +52,9 @@ const createRideSchema = new mongoose.Schema({
     date: {
         type: String,
         required: true
+    },
+    excluded: {
+        type: Boolean
     }
 
 

@@ -20,6 +20,9 @@ const requestRideSchema = new mongoose.Schema({
     requestedFromTime: {
         type: String,
         required: true
+    },
+    isAccepted: {
+        type: Boolean
     }
 
 

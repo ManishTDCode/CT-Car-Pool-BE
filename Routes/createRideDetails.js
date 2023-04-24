@@ -9,6 +9,14 @@ const CognitoExpress = require('cognito-express');
 router.get('/', authenticateToken, async (req, res) => {
     try {
         let rideDetails = await CreateRide.find();
+        for (let i = 0; i < rideDetails.length; i++) {
+            if (rideDetails[i].seats == 0) {
+                rideDetails[i].excluded = true;
+            }
+            else {
+                rideDetails[i].excluded = false;
+            }
+        }
         let resObj = {
             status: true,
             message: 'Data fetched successfully',

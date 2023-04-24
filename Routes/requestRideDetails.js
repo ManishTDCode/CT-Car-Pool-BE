@@ -41,7 +41,25 @@ router.post('', authenticateToken, async (req, res) => {
     }
 });
 
+router.patch('/:id', authenticateToken, async (req, res) => {
+    try {
+        const ride = await RequestRide.findById(req.params.id);
+        parameter = Object.keys(req.body)[0];
+        ride[parameter] = req.body[parameter];
+        const updatedRide = ride.save();
+        let resObj = {
+            status: true,
+            message: 'ride updated successfully',
+            empList: updatedRide
+        }
+        res.json(resObj);
+    } catch (error) {
+        res.json('error occured:' + error)
+    }
+});
+
 router.delete('/:id', authenticateToken, async (req, res) => {
+    console.log('inside delete');
     try {
         const ride = await RequestRide.findById(req.params.id);
         const a = await ride.deleteOne()

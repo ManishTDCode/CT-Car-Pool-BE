@@ -43,6 +43,12 @@ router.post('/', authenticateToken, (req, res) => {
             
             `;
         }
+        else if (req.body.emailType == "cancelRideRequest") {
+            output = `
+            <h3>${req.body.name} has cancelled your Ride</h3>
+            
+            `;
+        }
         else {
             output = `
             <h3>${req.body.name} has requested you for a Ride</h3>
@@ -53,7 +59,7 @@ router.post('/', authenticateToken, (req, res) => {
             <p>Time of Ride: <b>${req.body.time}</b></p>
             <br>
             <br>
-            <p><b>Note: Kinldy login to CT-CarPool and click view requested ride button to accept/reject the ride</b>
+            <p><b>Note: Kinldy login to CT-CarPool and click Accept/Reject tab to accept/reject the ride</b>
             `;
         }
 

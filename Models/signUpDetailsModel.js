@@ -3,8 +3,7 @@ const mongoose = require('mongoose');
 const signupSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     emailId: {
         type: String,
@@ -17,17 +16,20 @@ const signupSchema = new mongoose.Schema({
         unique: true
     },
     rideType: {
-        type: String
+        type: String,
+        required: true
     },
     vehicleNumber: {
         type: String,
-        unique: true
+        required: true
     },
     vehicleColor: {
-        type: String
+        type: String,
+        required: true
     },
     carType: {
-        type: String
+        type: String,
+        required: true
     }
 
 
